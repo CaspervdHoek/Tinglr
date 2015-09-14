@@ -1,5 +1,6 @@
-package nl.saxion.tinglr;
+package nl.saxion.tinglr.applicatie;
 
+import nl.saxion.tinglr.R;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
