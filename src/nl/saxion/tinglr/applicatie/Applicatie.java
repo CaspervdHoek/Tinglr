@@ -1,5 +1,13 @@
 package nl.saxion.tinglr.applicatie;
 
-public class Applicatie {
+import android.app.Application;
+
+public class Applicatie extends Application {
+	
+	public void onCreate() {
+		
+		
+		
+	};
 
 }
