@@ -5,17 +5,23 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 
 
 public class MainActivity extends Activity {
 
-	//test
-	//Test 2
+	private WebView webview;
+	private Applicatie app;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        app = (Applicatie) getBaseContext().getApplicationContext();
+        
+        webview = (WebView) findViewById(R.id.webView1);
+        
     }
 
 
