@@ -13,6 +13,7 @@ import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.types.User;
 
 import android.os.AsyncTask;
+import android.util.Log;
 import android.webkit.WebView;
 
 public class AuthorizationTask extends AsyncTask<String, Void, String> {
@@ -33,14 +34,17 @@ public class AuthorizationTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected String doInBackground(String... params) {
 		
-		String url = null;
+		String url = "";
 				
 		// Authenticate via OAuth
 		//JumblrClient client = model.getClient();
 		CommonsHttpOAuthProvider provider = model.getProvider();
 		CommonsHttpOAuthConsumer consumer = model.getConsumer();
+		Log.d("pre try", "casper");
 		try {
-			url = provider.retrieveRequestToken(consumer, model.getCallbackURL());
+			Log.d("pre retrieve", "casper");
+			url =  provider.retrieveRequestToken(consumer, model.getCallbackURL());
+			Log.d("post retrieve", "casper");
 		} catch (OAuthMessageSignerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -55,6 +59,7 @@ public class AuthorizationTask extends AsyncTask<String, Void, String> {
 			e.printStackTrace();
 		}
 		
+		Log.d("url", url);
 		return url;
 		
 	}
