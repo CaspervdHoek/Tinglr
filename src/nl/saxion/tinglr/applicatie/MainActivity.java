@@ -1,6 +1,8 @@
 package nl.saxion.tinglr.applicatie;
 
 import nl.saxion.tinglr.R;
+import nl.saxion.tinglr.asynctasks.AuthorizationTask;
+import nl.saxion.tinglr.model.Model;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,16 +13,22 @@ import android.webkit.WebView;
 public class MainActivity extends Activity {
 
 	private WebView webview;
-	private Applicatie app;
+	private TinglrApplication app;
+	private Model model;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        app = (Applicatie) getBaseContext().getApplicationContext();
+        app = (TinglrApplication) getBaseContext().getApplicationContext();
+        model = app.getModel();
         
         webview = (WebView) findViewById(R.id.webView1);
+        
+        AuthorizationTask at = new AuthorizationTask(webview, model);
+        
+        at.execute();
         
     }
 

@@ -3,7 +3,7 @@ package nl.saxion.tinglr.applicatie;
 import nl.saxion.tinglr.model.Model;
 import android.app.Application;
 
-public class Applicatie extends Application {
+public class TinglrApplication extends Application {
 	
 	private Model model;
 	
