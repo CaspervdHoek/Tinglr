@@ -10,23 +10,25 @@ public class Model {
 	private static final String OAUTH_REQUEST_URL = "http://www.tumblr.com/oauth/request_token";
 	private static final String OAUTH_ACCESSTOKEN_URL = "http://www.tumblr.com/oauth/access_token";
 	private static final String OAUT_AUTHORIZE_URL = "http://www.tumblr.com/oauth/authorize";
-	private static final String OAUTH_CALLBACK_URL = "http://9gag.com";
+	private static final String OAUTH_CALLBACK_URL = "http://www.9gag.com";
 	private static final String CONSUMER_KEY = "wDfnPKafcj7hGnhDleK8E7gnY7IP23gcnGCFIlpnTs6feCV2c6";
 	private static final String CONSUMER_SECRET = "aQqb9B82P0cY9myrmYwGKiNWr488IXuWz5VNtWdgN7e2AgFpvm";
 	
+	private String verifierToken;
+	
 	private CommonsHttpOAuthProvider provider;
 	private CommonsHttpOAuthConsumer consumer;
-	//private JumblrClient client;
+	private JumblrClient client;
 	
 	public Model(){
-	//	client = new JumblrClient(CONSUMER_KEY, CONSUMER_SECRET);
+		client = new JumblrClient(CONSUMER_KEY, CONSUMER_SECRET);
 		provider = new CommonsHttpOAuthProvider(OAUTH_REQUEST_URL, OAUTH_ACCESSTOKEN_URL, OAUT_AUTHORIZE_URL);
 		consumer = new CommonsHttpOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
 	}
 	
-//	public JumblrClient getClient(){
-//	//	return client;
-//	}
+	public JumblrClient getClient(){
+		return client;
+	}
 	
 	public CommonsHttpOAuthProvider getProvider(){
 		return provider;
@@ -38,6 +40,18 @@ public class Model {
 	
 	public String getCallbackURL(){
 		return OAUTH_CALLBACK_URL;
+	}
+	
+	public String getVerifierToken(){
+		return verifierToken;
+	}
+	
+	public void setVerifierToken(String verifier){
+		this.verifierToken = verifier;
+	}
+	
+	public void setClientToken(String oauthToken, String oauthSecret){
+		client.setToken(oauthToken, oauthSecret);
 	}
 
 }

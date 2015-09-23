@@ -1,13 +1,18 @@
 package nl.saxion.tinglr.applicatie;
 
 import nl.saxion.tinglr.R;
+import nl.saxion.tinglr.asynctasks.AccessTokenTask;
 import nl.saxion.tinglr.asynctasks.AuthorizationTask;
 import nl.saxion.tinglr.model.Model;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class MainActivity extends Activity {
 
@@ -26,9 +31,40 @@ public class MainActivity extends Activity {
         webview = (WebView) findViewById(R.id.webView1);
         
         AuthorizationTask at = new AuthorizationTask(webview, model);
+        final AccessTokenTask att = new AccessTokenTask(model);
         
         at.execute();
         
+        final Intent i = new Intent(this, DashboardActivity.class);
+        
+        webview.setWebViewClient(new WebViewClient() {
+        	        	
+        	@Override
+        	public boolean shouldOverrideUrlLoading(WebView view, String url) {
+        		String verifierToken = null;
+        		if (url.startsWith("http://www.9gag.com")){
+        			Log.d("sex-url", url);
+        			
+        			verifierToken = Uri.parse(url).getQueryParameter("oauth_verifier");
+        			        			
+        			model.setVerifierToken(verifierToken);
+        			
+        			att.execute(verifierToken);
+        			
+        			webview.setVisibility(WebView.GONE);
+        			
+        			
+        			startActivity(i);
+        			
+        			finish();
+        			        			
+        			return true;
+        		}
+        		return false;
+        	}
+        	
+        });
+                
     }
 
 
