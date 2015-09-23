@@ -14,6 +14,8 @@ public class DashboardActivity extends Activity {
 	private ListView listViewTumblrPosts;
 	private TinglrApplication app;
 	private Model model;
+	private TextView eigenNaam;
+	private ImageView eigenFoto;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +26,7 @@ public class DashboardActivity extends Activity {
 		model = app.getModel();
 		
 		listViewTumblrPosts = (ListView) findViewById(R.id.listViewTumblrPosts);
+		eigenNaam = (TextView) findViewById(R.id.eigenNaam);
+		eigenFoto = (ImageView) findViewById(R.id.eigenFoto);
 	}
 }
