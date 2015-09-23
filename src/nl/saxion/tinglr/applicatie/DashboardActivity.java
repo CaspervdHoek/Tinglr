@@ -5,6 +5,7 @@ import nl.saxion.tinglr.model.Model;
 import nl.saxion.tinglr.view.TumblrPostAdapter;
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ public class DashboardActivity extends Activity {
 	private Model model;
 	private TextView eigenNaam;
 	private ImageView eigenFoto;
+	private Button bingButton;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,5 +30,6 @@ public class DashboardActivity extends Activity {
 		listViewTumblrPosts = (ListView) findViewById(R.id.listViewTumblrPosts);
 		eigenNaam = (TextView) findViewById(R.id.eigenNaam);
 		eigenFoto = (ImageView) findViewById(R.id.eigenFoto);
+		bingButton = (Button) findViewById(R.id.bingButton);
 	}
 }
