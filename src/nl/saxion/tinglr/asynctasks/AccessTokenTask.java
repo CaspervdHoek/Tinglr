@@ -4,7 +4,9 @@ package nl.saxion.tinglr.asynctasks;
 import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.types.User;
 
+import nl.saxion.tinglr.applicatie.MainActivity;
 import nl.saxion.tinglr.applicatie.TinglrApplication;
+import nl.saxion.tinglr.model.CustomUser;
 import nl.saxion.tinglr.model.Model;
 import oauth.signpost.commonshttp.CommonsHttpOAuthConsumer;
 import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
@@ -13,6 +15,7 @@ import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
 import oauth.signpost.exception.OAuthNotAuthorizedException;
 import android.os.AsyncTask;
+import android.sax.StartElementListener;
 import android.util.Log;
 
 public class AccessTokenTask extends AsyncTask<String, Void, String> {
@@ -22,12 +25,16 @@ public class AccessTokenTask extends AsyncTask<String, Void, String> {
 	private CommonsHttpOAuthConsumer consumer;
 	private TinglrApplication app;
 	private JumblrClient client;
+	private User user;
+	private CustomUser customUser;
+	private MainActivity activity;
 	
-	public AccessTokenTask(Model model){
+	public AccessTokenTask(Model model, MainActivity activity){
 		this.model = model;
 		provider = model.getProvider();
 		consumer = model.getConsumer();
 		client = model.getClient();
+		this.activity = activity;
 	}
 
 	@Override
@@ -40,7 +47,7 @@ public class AccessTokenTask extends AsyncTask<String, Void, String> {
 			Log.d("secret", consumer.getTokenSecret());
 			model.setClientToken(consumer.getToken(), consumer.getTokenSecret());
 			
-			User user = client.user();
+			user = client.user();
 			
 			Log.d("Username" , user.getName());
 		} catch (OAuthMessageSignerException e) {
@@ -62,7 +69,12 @@ public class AccessTokenTask extends AsyncTask<String, Void, String> {
 	
 	@Override
 	protected void onPostExecute(String result) {
-				
+		customUser = new CustomUser(user.getName());
+		model.setUser(customUser);
+		customUser.setFollowingCount(user.getFollowingCount());
+		customUser.setLikeCount(user.getLikeCount());
+		customUser.setBlogs(user.getBlogs());
+		activity.startDashboardActivity();
 		super.onPostExecute(result);
 	}
 

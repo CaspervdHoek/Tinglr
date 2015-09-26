@@ -31,19 +31,17 @@ public class MainActivity extends Activity {
         webview = (WebView) findViewById(R.id.webView1);
         
         AuthorizationTask at = new AuthorizationTask(webview, model);
-        final AccessTokenTask att = new AccessTokenTask(model);
+        final AccessTokenTask att = new AccessTokenTask(model, this);
         
         at.execute();
-        
-        final Intent i = new Intent(this, DashboardActivity.class);
-        
+                
         webview.setWebViewClient(new WebViewClient() {
         	        	
         	@Override
         	public boolean shouldOverrideUrlLoading(WebView view, String url) {
         		String verifierToken = null;
         		if (url.startsWith("http://www.9gag.com")){
-        			Log.d("sex-url", url);
+        			Log.d("token-url", url);
         			
         			verifierToken = Uri.parse(url).getQueryParameter("oauth_verifier");
         			        			
@@ -52,9 +50,6 @@ public class MainActivity extends Activity {
         			att.execute(verifierToken);
         			
         			webview.setVisibility(WebView.GONE);
-        			
-        			
-        			startActivity(i);
         			
         			finish();
         			        			
@@ -65,6 +60,11 @@ public class MainActivity extends Activity {
         	
         });
                 
+    }
+    
+    public void startDashboardActivity(){
+    	final Intent i = new Intent(this, DashboardActivity.class);
+    	startActivity(i);
     }
 
 

@@ -5,13 +5,13 @@ import org.json.JSONObject;
 
 public class TumblrPost {
 	
-	private User user;
+	private CustomUser user;
 	private String text;
 	
 	
 	public TumblrPost(JSONObject tumblrPost){
 		try {
-			this.user = new User(tumblrPost.getJSONObject("user"));
+			this.user = new CustomUser(tumblrPost.getJSONObject("user"));
 			this.text = tumblrPost.getString("text");
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -19,12 +19,12 @@ public class TumblrPost {
 	}
 	
 	// Constructor zonder JSON
-	public TumblrPost(User user, String text){
+	public TumblrPost(CustomUser user, String text){
 		this.user = user;
 		this.text = text;
 	}
 	
-	public User getUser(){
+	public CustomUser getUser(){
 		return user;
 	}
 	

@@ -4,10 +4,13 @@ import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.types.User;
 
 import nl.saxion.tinglr.R;
+import nl.saxion.tinglr.model.CustomUser;
 import nl.saxion.tinglr.model.Model;
 import nl.saxion.tinglr.view.TumblrPostAdapter;
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -31,14 +34,21 @@ public class DashboardActivity extends Activity {
 		
 		app = (TinglrApplication) getBaseContext().getApplicationContext();
 		model = app.getModel();
-//		client = model.getClient();
-//		User user = client.user();
+		final CustomUser customUser = model.getUser();
 		
 		listViewTumblrPosts = (ListView) findViewById(R.id.listViewTumblrPosts);
 		eigenNaam = (TextView) findViewById(R.id.eigenNaam);
 		eigenFoto = (ImageView) findViewById(R.id.eigenFoto);
 		bingButton = (ImageButton) findViewById(R.id.bingButton);
+		eigenNaam.setText(customUser.getUserName());
 		
-//		eigenNaam.setText(model.getClient().user().getName());
+		bingButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.d("test", "test");
+				Log.d("name", customUser.getUserName());
+			}
+		});
 	}
 }

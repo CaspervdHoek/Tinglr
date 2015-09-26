@@ -19,6 +19,7 @@ public class Model {
 	private CommonsHttpOAuthProvider provider;
 	private CommonsHttpOAuthConsumer consumer;
 	private JumblrClient client;
+	private CustomUser user;
 	
 	public Model(){
 		client = new JumblrClient(CONSUMER_KEY, CONSUMER_SECRET);
@@ -52,6 +53,14 @@ public class Model {
 	
 	public void setClientToken(String oauthToken, String oauthSecret){
 		client.setToken(oauthToken, oauthSecret);
+	}
+	
+	public CustomUser getUser(){
+		return user;
+	}
+	
+	public void setUser(CustomUser user){
+		this.user = user;
 	}
 
 }
