@@ -1,4 +1,4 @@
-package nl.saxion.tinglr.asynctasks;
+package nl.saxion.tinglr.asynctasks.get;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +28,7 @@ public class GetDashboardTask extends AsyncTask<String, Void, List<Post>>{
 		this.model = model;
 		this.activity = activity;
 		this.listview = listview;
-		client = model.getClient();
+		client = this.model.getClient();
 		
 		options.put("filter", "text");
 	}

@@ -1,4 +1,4 @@
-package nl.saxion.tinglr.asynctasks;
+package nl.saxion.tinglr.asynctasks.get;
 
 
 import com.tumblr.jumblr.JumblrClient;

@@ -7,8 +7,9 @@ import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.User;
 
 import nl.saxion.tinglr.R;
-import nl.saxion.tinglr.asynctasks.GetDashboardTask;
-import nl.saxion.tinglr.asynctasks.ProfilePhotoTask;
+import nl.saxion.tinglr.asynctasks.get.GetDashboardTask;
+import nl.saxion.tinglr.asynctasks.get.ProfilePhotoTask;
+import nl.saxion.tinglr.asynctasks.post.PostTextPost;
 import nl.saxion.tinglr.model.CustomUser;
 import nl.saxion.tinglr.model.Model;
 import nl.saxion.tinglr.view.TumblrPostAdapter;
@@ -91,15 +92,20 @@ public class DashboardActivity extends Activity {
 				builder.setIcon(R.drawable.menu);
 				builder.setMessage("Beasty Post");
 				
-				final EditText input = new EditText(DashboardActivity.this);
-				builder.setView(input);
+				final EditText inputText = new EditText(DashboardActivity.this);
+				inputText.setHint("Text");
+				
+				builder.setView(inputText);
+				
 				
 				builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
 					
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						String text = input.getText().toString();
+						String text = inputText.getText().toString();
+						PostTextPost post = new PostTextPost(model, text);
+						post.execute();
 						
 					}
 				});

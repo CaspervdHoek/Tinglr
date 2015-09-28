@@ -9,7 +9,7 @@ import com.tumblr.jumblr.types.TextPost;
 
 import nl.saxion.tinglr.R;
 import nl.saxion.tinglr.applicatie.TinglrApplication;
-import nl.saxion.tinglr.asynctasks.ProfilePhotoTask;
+import nl.saxion.tinglr.asynctasks.get.ProfilePhotoTask;
 import nl.saxion.tinglr.model.Model;
 import nl.saxion.tinglr.model.TumblrPost;
 import android.content.Context;

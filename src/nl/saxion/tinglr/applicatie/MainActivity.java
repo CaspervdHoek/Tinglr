@@ -1,8 +1,8 @@
 package nl.saxion.tinglr.applicatie;
 
 import nl.saxion.tinglr.R;
-import nl.saxion.tinglr.asynctasks.AccessTokenTask;
-import nl.saxion.tinglr.asynctasks.AuthorizationTask;
+import nl.saxion.tinglr.asynctasks.get.AccessTokenTask;
+import nl.saxion.tinglr.asynctasks.get.AuthorizationTask;
 import nl.saxion.tinglr.model.Model;
 import android.app.Activity;
 import android.content.Intent;
