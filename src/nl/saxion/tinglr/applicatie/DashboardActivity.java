@@ -13,10 +13,13 @@ import nl.saxion.tinglr.model.CustomUser;
 import nl.saxion.tinglr.model.Model;
 import nl.saxion.tinglr.view.TumblrPostAdapter;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -29,9 +32,13 @@ public class DashboardActivity extends Activity {
 	private TinglrApplication app;
 	private Model model;
 	private TextView eigenNaam;
+	
 	private ImageView eigenFoto;
-	private ImageButton bingButton;
+	private ImageView imageRefresh;
 	private List<Post> tumblrPosts;
+	private ImageView textPost;
+	
+	private GetDashboardTask gdt;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +52,12 @@ public class DashboardActivity extends Activity {
 		listViewTumblrPosts = (ListView) findViewById(R.id.listViewTumblrPosts);
 		eigenNaam = (TextView) findViewById(R.id.eigenNaam);
 		eigenFoto = (ImageView) findViewById(R.id.eigenFoto);
-		bingButton = (ImageButton) findViewById(R.id.bingButton);
+		imageRefresh = (ImageView) findViewById(R.id.refreshImage);
+		textPost = (ImageView) findViewById(R.id.imageView1);
+		
 		eigenNaam.setText(customUser.getUserName());
 				
-		GetDashboardTask gdt = new GetDashboardTask(model, this, listViewTumblrPosts);
+		 gdt = new GetDashboardTask(model, this, listViewTumblrPosts);
 		
 		gdt.execute();		
 		
@@ -56,13 +65,61 @@ public class DashboardActivity extends Activity {
 		
 		pft.execute(eigenNaam.getText() + "");
 		
-		bingButton.setOnClickListener(new View.OnClickListener() {
+		imageRefresh.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				Log.d("test", "test");
 				Log.d("name", customUser.getUserName());
+				GetDashboardTask gdt = new GetDashboardTask(model, DashboardActivity.this, listViewTumblrPosts);
+				gdt.execute();
 			}
 		});
+		
+		initButtons();
+	}
+	
+	private void initButtons(){
+		textPost.setClickable(true);
+		textPost.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Log.d("TEST", "Kom jij hier");
+				AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+				builder.setTitle("Post");
+				builder.setIcon(R.drawable.menu);
+				builder.setMessage("Beasty Post");
+				
+				final EditText input = new EditText(DashboardActivity.this);
+				builder.setView(input);
+				
+				builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						String text = input.getText().toString();
+						
+					}
+				});
+				
+				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						dialog.dismiss();
+						
+					}
+				});
+				
+				
+				AlertDialog add = builder.show();
+				add.show();
+				
+			}
+		});
+		
 	}
 }
