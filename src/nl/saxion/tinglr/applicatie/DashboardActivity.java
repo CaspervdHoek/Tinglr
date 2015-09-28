@@ -1,9 +1,14 @@
 package nl.saxion.tinglr.applicatie;
 
+import java.util.List;
+
 import com.tumblr.jumblr.JumblrClient;
+import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.User;
 
 import nl.saxion.tinglr.R;
+import nl.saxion.tinglr.asynctasks.GetDashboardTask;
+import nl.saxion.tinglr.asynctasks.ProfilePhotoTask;
 import nl.saxion.tinglr.model.CustomUser;
 import nl.saxion.tinglr.model.Model;
 import nl.saxion.tinglr.view.TumblrPostAdapter;
@@ -20,11 +25,13 @@ import android.widget.TextView;
 public class DashboardActivity extends Activity {
 
 	private ListView listViewTumblrPosts;
+	private TumblrPostAdapter adapter;
 	private TinglrApplication app;
 	private Model model;
 	private TextView eigenNaam;
 	private ImageView eigenFoto;
 	private ImageButton bingButton;
+	private List<Post> tumblrPosts;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,14 @@ public class DashboardActivity extends Activity {
 		eigenFoto = (ImageView) findViewById(R.id.eigenFoto);
 		bingButton = (ImageButton) findViewById(R.id.bingButton);
 		eigenNaam.setText(customUser.getUserName());
+				
+		GetDashboardTask gdt = new GetDashboardTask(model, this, listViewTumblrPosts);
+		
+		gdt.execute();		
+		
+		ProfilePhotoTask pft = new ProfilePhotoTask(model, eigenFoto);
+		
+		pft.execute(eigenNaam.getText() + "");
 		
 		bingButton.setOnClickListener(new View.OnClickListener() {
 			
