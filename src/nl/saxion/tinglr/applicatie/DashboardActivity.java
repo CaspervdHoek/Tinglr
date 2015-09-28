@@ -25,7 +25,6 @@ public class DashboardActivity extends Activity {
 	private TextView eigenNaam;
 	private ImageView eigenFoto;
 	private ImageButton bingButton;
-	private JumblrClient client;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

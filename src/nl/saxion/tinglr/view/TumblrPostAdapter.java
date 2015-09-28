@@ -3,6 +3,8 @@ package nl.saxion.tinglr.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tumblr.jumblr.types.Post;
+
 import nl.saxion.tinglr.R;
 import nl.saxion.tinglr.model.TumblrPost;
 import android.content.Context;
@@ -13,12 +15,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class TumblrPostAdapter extends ArrayAdapter<TumblrPost> {
+public class TumblrPostAdapter extends ArrayAdapter<Post> {
 	
 	private LayoutInflater inflater;
 	private int resource;
 
-	public TumblrPostAdapter(Context context, int resource, ArrayList<TumblrPost> objects) {
+	public TumblrPostAdapter(Context context, int resource, List<Post> objects) {
 		super(context, resource, objects);
 		inflater = LayoutInflater.from(context);
 		this.resource = resource;
@@ -34,10 +36,10 @@ public class TumblrPostAdapter extends ArrayAdapter<TumblrPost> {
 		TextView tumblrPostText = (TextView) convertView.findViewById(R.id.tumblrPostText);
 		ImageView profielfoto = (ImageView) convertView.findViewById(R.id.profielFoto);
 		
-		TumblrPost tumblrPost = getItem(position);
+		Post post = getItem(position);
 		
-		userName.setText(tumblrPost.getUser().getUserName());
-		tumblrPostText.setText(tumblrPost.getText());
+		userName.setText(post.getBlogName());
+		tumblrPostText.setText(post.toString());
 		
 		return convertView;
 	}
