@@ -73,22 +73,21 @@ public class DashboardActivity extends Activity {
 
 		pft.execute(eigenNaam.getText() + "");
 
+		initButtons();
+	}
+
+	private void initButtons() {
+		imageRefresh.setClickable(true);
 		imageRefresh.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				Log.d("test", "test");
-				Log.d("name", customUser.getUserName());
 				GetDashboardTask gdt = new GetDashboardTask(model,
 						DashboardActivity.this, listViewTumblrPosts);
 				gdt.execute();
 			}
 		});
 
-		initButtons();
-	}
-
-	private void initButtons() {
 		textPost.setClickable(true);
 
 		/**
