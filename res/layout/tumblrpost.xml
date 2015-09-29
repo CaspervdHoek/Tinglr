@@ -10,13 +10,13 @@
 
         <ImageView
             android:id="@+id/profielFoto"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:src="@drawable/ic_launcher" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <TextView
@@ -30,6 +30,7 @@
                 android:id="@+id/tumblrPostText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="20dp"
                 android:text="De tekst van de post" />
 
         </LinearLayout>

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.tumblr.jumblr.types.PhotoPost;
 import com.tumblr.jumblr.types.Post;
+import com.tumblr.jumblr.types.QuotePost;
 import com.tumblr.jumblr.types.TextPost;
 
 import nl.saxion.tinglr.R;
@@ -47,13 +48,14 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 		ImageView profielfoto = (ImageView) convertView.findViewById(R.id.profielFoto);
 		
 		Post post = getItem(position);
-		
 		userName.setText(post.getBlogName());
 		
 		if(post instanceof TextPost){
 			tumblrPostText.setText(((TextPost) post).getBody());			
 		} else if (post instanceof PhotoPost){
 			tumblrPostText.setText(((PhotoPost) post).getCaption());			
+		} else if (post instanceof QuotePost){
+			tumblrPostText.setText("\"" + ((QuotePost) post).getText() + "\"");
 		}
 		
 		ProfilePhotoTask pft = new ProfilePhotoTask(model, profielfoto);
