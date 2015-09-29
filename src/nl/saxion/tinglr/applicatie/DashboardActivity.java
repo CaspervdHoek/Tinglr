@@ -8,6 +8,7 @@ import com.tumblr.jumblr.types.User;
 
 import nl.saxion.tinglr.R;
 import nl.saxion.tinglr.asynctasks.get.GetDashboardTask;
+import nl.saxion.tinglr.asynctasks.get.GetOwnBlogTask;
 import nl.saxion.tinglr.asynctasks.get.ProfilePhotoTask;
 import nl.saxion.tinglr.asynctasks.post.PostTextPost;
 import nl.saxion.tinglr.model.CustomUser;
@@ -203,6 +204,16 @@ public class DashboardActivity extends Activity {
 
 			}
 
+		});
+		
+		eigenFoto.setClickable(true);
+		eigenFoto.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				GetOwnBlogTask gobt = new GetOwnBlogTask(model, DashboardActivity.this, listViewTumblrPosts);
+				gobt.execute();
+			}
 		});
 
 	}

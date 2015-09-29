@@ -27,7 +27,7 @@ public class ProfilePhotoTask extends AsyncTask<String, Void, Bitmap> {
 	
 	@Override
 	protected Bitmap doInBackground(String... params) {
-		String photoUrl = client.blogAvatar(params[0], 512);
+		String photoUrl = client.blogAvatar(params[0], 128);
 		
 		Bitmap myBitmap = null;
 		
