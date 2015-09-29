@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:background="#C0C0C0" >
 
         <LinearLayout
@@ -17,15 +17,16 @@
 
             <ImageView
                 android:id="@+id/eigenFoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="128dp" 
+                android:layout_height="128dp"
                 android:src="@drawable/ic_launcher" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical" >
 
             <LinearLayout
@@ -50,8 +51,8 @@
 
                 <ImageView
                     android:id="@+id/refreshImage"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:src="@drawable/netwerkicon" />
             </LinearLayout>
 
@@ -64,16 +65,18 @@
     <ListView
         android:id="@+id/listViewTumblrPosts"
         android:layout_width="match_parent"
-        android:layout_height="450dp" >
+        android:layout_height="wrap_content" 
+        android:layout_weight="5" >
     </ListView>
 
      <View android:background="#000000" android:layout_width = "fill_parent" android:layout_height="1dip"  />
     
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:background="#C0C0C0"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:layout_weight="1" >
 
         <ImageView
             android:id="@+id/imageViewPost"
