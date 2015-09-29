@@ -28,104 +28,184 @@ import android.widget.TextView;
 
 public class DashboardActivity extends Activity {
 
+	private final int POST_TEXT = 101;
+	private final int POST_QUOTE = 102;
+
 	private ListView listViewTumblrPosts;
 	private TumblrPostAdapter adapter;
 	private TinglrApplication app;
 	private Model model;
 	private TextView eigenNaam;
-	
+
 	private ImageView eigenFoto;
 	private ImageView imageRefresh;
 	private List<Post> tumblrPosts;
+
 	private ImageView textPost;
-	
+	private ImageView quotePost;
+
 	private GetDashboardTask gdt;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dashboard);
-		
+
 		app = (TinglrApplication) getBaseContext().getApplicationContext();
 		model = app.getModel();
 		final CustomUser customUser = model.getUser();
-		
+
 		listViewTumblrPosts = (ListView) findViewById(R.id.listViewTumblrPosts);
 		eigenNaam = (TextView) findViewById(R.id.eigenNaam);
 		eigenFoto = (ImageView) findViewById(R.id.eigenFoto);
 		imageRefresh = (ImageView) findViewById(R.id.refreshImage);
-		textPost = (ImageView) findViewById(R.id.imageView1);
-		
+
+		textPost = (ImageView) findViewById(R.id.imageViewPost);
+		quotePost = (ImageView) findViewById(R.id.imageViewQuote);
+
 		eigenNaam.setText(customUser.getUserName());
-				
-		 gdt = new GetDashboardTask(model, this, listViewTumblrPosts);
-		
-		gdt.execute();		
-		
+
+		gdt = new GetDashboardTask(model, this, listViewTumblrPosts);
+
+		gdt.execute();
+
 		ProfilePhotoTask pft = new ProfilePhotoTask(model, eigenFoto);
-		
+
 		pft.execute(eigenNaam.getText() + "");
-		
+
 		imageRefresh.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Log.d("test", "test");
 				Log.d("name", customUser.getUserName());
-				GetDashboardTask gdt = new GetDashboardTask(model, DashboardActivity.this, listViewTumblrPosts);
+				GetDashboardTask gdt = new GetDashboardTask(model,
+						DashboardActivity.this, listViewTumblrPosts);
 				gdt.execute();
 			}
 		});
-		
+
 		initButtons();
 	}
-	
-	private void initButtons(){
+
+	private void initButtons() {
 		textPost.setClickable(true);
+
+		/**
+		 * De onCLick methode voor als een gebruiker een stuk tekst wil posten
+		 */
 		textPost.setOnClickListener(new View.OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				Log.d("TEST", "Kom jij hier");
-				AlertDialog.Builder builder = new AlertDialog.Builder(DashboardActivity.this);
+				// Popup scherm waar de gebruiker text kan invullen om
+				// vervolgens te posten
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						DashboardActivity.this);
 				builder.setTitle("Post");
 				builder.setIcon(R.drawable.menu);
 				builder.setMessage("Beasty Post");
-				
+
 				final EditText inputText = new EditText(DashboardActivity.this);
 				inputText.setHint("Text");
-				
+
 				builder.setView(inputText);
-				
-				
-				builder.setPositiveButton("Submit", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						String text = inputText.getText().toString();
-						PostTextPost post = new PostTextPost(model, text);
-						post.execute();
-						
-					}
-				});
-				
-				builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-					
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// TODO Auto-generated method stub
-						dialog.dismiss();
-						
-					}
-				});
-				
-				
+
+				builder.setPositiveButton("Submit",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+								String text = inputText.getText().toString();
+
+								if (text != null && !text.isEmpty()) {
+									PostTextPost post = new PostTextPost(model,
+											text, POST_TEXT);
+									post.execute();
+								}
+
+							}
+						});
+
+				builder.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// Sluit de popup weer af
+								dialog.dismiss();
+
+							}
+						});
+
+				// Laat de popup zien als de gebruiker op de knop klinkt
 				AlertDialog add = builder.show();
 				add.show();
-				
+
 			}
 		});
-		
+
+		/**
+		 * De onClick methode als de gebruiker een quote wil posten
+		 */
+		quotePost.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// Hier wordt de popup gemaakt om een quote te kunnen posten
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						DashboardActivity.this);
+				builder.setTitle("Quote");
+				builder.setIcon(R.drawable.qoute);
+				builder.setMessage("Hottie Quote");
+
+				final EditText inputText = new EditText(DashboardActivity.this);
+				inputText.setHint("Text");
+
+				builder.setView(inputText);
+
+				builder.setPositiveButton("Submit",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+								String text = inputText.getText().toString();
+								// Controle om te kijken of de text niet leeg
+								if (text != null && !text.isEmpty()) {
+									PostTextPost post = new PostTextPost(model,
+											text, POST_QUOTE);
+									post.execute();
+
+								}
+
+							}
+						});
+
+				builder.setNegativeButton("Cancel",
+						new DialogInterface.OnClickListener() {
+
+							@Override
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+								dialog.dismiss();
+
+							}
+						});
+
+				AlertDialog add = builder.show();
+				add.show();
+
+			}
+
+		});
+
 	}
+
 }
