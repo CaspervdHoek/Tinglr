@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="right"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical" >
 
     <LinearLayout
@@ -12,6 +13,7 @@
 
         <ImageView
             android:id="@+id/profielFoto"
+            android:focusable="false"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:src="@drawable/ic_launcher" />
@@ -46,13 +48,13 @@
             android:orientation="vertical" >
 
             <ImageView
-                android:id="@+id/imageView1"
+                android:id="@+id/favoriteButton"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:src="@drawable/ic_action_favorite" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/reblogButton"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:src="@drawable/ic_action_repeat" />
