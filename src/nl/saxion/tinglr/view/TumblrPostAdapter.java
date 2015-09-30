@@ -3,6 +3,7 @@ package nl.saxion.tinglr.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tumblr.jumblr.JumblrClient;
 import com.tumblr.jumblr.types.PhotoPost;
 import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.QuotePost;
@@ -11,7 +12,9 @@ import com.tumblr.jumblr.types.TextPost;
 import nl.saxion.tinglr.R;
 import nl.saxion.tinglr.applicatie.TinglrApplication;
 import nl.saxion.tinglr.asynctasks.get.GetBlogTask;
+import nl.saxion.tinglr.asynctasks.get.LikeTask;
 import nl.saxion.tinglr.asynctasks.get.ProfilePhotoTask;
+import nl.saxion.tinglr.asynctasks.get.ReblogTask;
 import nl.saxion.tinglr.model.Model;
 import nl.saxion.tinglr.model.TumblrPost;
 import android.content.Context;
@@ -29,6 +32,8 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 	private int resource;
 	private Model model;
 	private TinglrApplication app;
+	private Post post;
+	private JumblrClient client;
 
 	public TumblrPostAdapter(Context context, int resource, List<Post> objects) {
 		super(context, resource, objects);
@@ -37,6 +42,7 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 		
 		app = (TinglrApplication) context.getApplicationContext();
 		model = app.getModel();
+		client = model.getClient();
 	}
 	
 	@Override
@@ -51,7 +57,7 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 		ImageView favoriteButton = (ImageView) convertView.findViewById(R.id.favoriteButton);
 		ImageView reblogButton = (ImageView) convertView.findViewById(R.id.reblogButton);
 		
-		Post post = getItem(position);
+		post = getItem(position);
 		userName.setText(post.getBlogName());
 		
 		if(post instanceof TextPost){
@@ -62,11 +68,10 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 			tumblrPostText.setText("\"" + ((QuotePost) post).getText() + "\"");
 		}
 		
-		if (!post.isLiked()){
+		if (post.isLiked()){
 			favoriteButton.setImageResource(R.drawable.ic_action_favorited);
 		} else {
 			favoriteButton.setImageResource(R.drawable.ic_action_favorite);
-
 		}
 		
 		ProfilePhotoTask pft = new ProfilePhotoTask(model, profielfoto);
@@ -88,6 +93,8 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 			@Override
 			public void onClick(View v) {
 				Log.d("Favorite", "Favorite this post");
+				LikeTask lt = new LikeTask();
+				lt.execute(post);
 			}
 		});
 		
@@ -97,6 +104,8 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 			@Override
 			public void onClick(View v) {
 				Log.d("Reblog", "Reblog this post");
+				ReblogTask rt = new ReblogTask();
+				rt.execute(post, client);
 			}
 		});
 		
