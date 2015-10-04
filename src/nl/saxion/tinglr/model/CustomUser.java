@@ -7,6 +7,10 @@ import org.json.JSONObject;
 
 import com.tumblr.jumblr.types.Blog;
 
+/**
+ * Kopie klasse van de Jumblr user die zonde asynctask gebruikt kan worden, na instantiatie
+ *
+ */
 public class CustomUser {
 	
 	private String userName;

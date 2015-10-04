@@ -3,6 +3,10 @@ package nl.saxion.tinglr.model;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Model van een Tumblrpost
+ *
+ */
 public class TumblrPost {
 	
 	private CustomUser user;

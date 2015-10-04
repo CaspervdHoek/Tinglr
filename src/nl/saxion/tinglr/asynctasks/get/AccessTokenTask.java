@@ -18,6 +18,10 @@ import android.os.AsyncTask;
 import android.sax.StartElementListener;
 import android.util.Log;
 
+/**
+ * Task voor het ophalen van een accesstoken bij Tumblr
+ *
+ */
 public class AccessTokenTask extends AsyncTask<String, Void, String> {
 	
 	private Model model;
@@ -37,6 +41,9 @@ public class AccessTokenTask extends AsyncTask<String, Void, String> {
 		this.activity = activity;
 	}
 
+	/**
+	 * De provider haalt met de eerder opgehaalde verifiertoken een accesstoken op
+	 */
 	@Override
 	protected String doInBackground(String... params) {
 		
@@ -49,24 +56,24 @@ public class AccessTokenTask extends AsyncTask<String, Void, String> {
 			
 			user = client.user();
 			
-			Log.d("Username" , user.getName());
 		} catch (OAuthMessageSignerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OAuthNotAuthorizedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OAuthExpectationFailedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OAuthCommunicationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return null;
 	}
 	
+	/**
+	 * Omdat Jumblr niet buiten een asynctask werkt, maken we hier handmatig een kopie van de Jumblr User klasse
+	 * in onze eigen CustomUser. Deze heeft vrijwel dezelfde gegeven en is zonder asynctask te gebruiken. Tevens
+	 * wordt een DashboardActivity gestart.
+	 */
 	@Override
 	protected void onPostExecute(String result) {
 		customUser = new CustomUser(user.getName());

@@ -7,6 +7,10 @@ import com.tumblr.jumblr.types.TextPost;
 import nl.saxion.tinglr.model.Model;
 import android.os.AsyncTask;
 
+/**
+ * Task die een textpost of quotepost kan maken op de blog van de gebruiker.
+ *
+ */
 public class PostTextPost extends AsyncTask<Void, Void, Void> {
 
 	private Model model;
@@ -25,6 +29,10 @@ public class PostTextPost extends AsyncTask<Void, Void, Void> {
 
 	}
 
+	/**
+	 * Controleert of de meegegeven tekst in een textpost moet komen of in een quotepost, en post dit vervolgens
+	 * m.b.v. Jumblr
+	 */
 	@Override
 	protected Void doInBackground(Void... params) {
 		try {
@@ -38,10 +46,8 @@ public class PostTextPost extends AsyncTask<Void, Void, Void> {
 				quote.save();
 			}
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

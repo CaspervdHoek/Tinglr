@@ -15,6 +15,10 @@ import com.tumblr.jumblr.types.Post;
 import android.os.AsyncTask;
 import android.widget.ListView;
 
+/**
+ * Task die een blog met meegegeven naam kan ophalen.
+ *
+ */
 public class GetBlogTask extends AsyncTask<String, Void, List<Post>> {
 
 	private Model model;
@@ -36,11 +40,18 @@ public class GetBlogTask extends AsyncTask<String, Void, List<Post>> {
 	}
 	
 	
+	/**
+	 * Met behulp van Jumblr wordt een lijst met post die bij de meegegeven blognaam opgehaald.
+	 */
 	@Override
 	protected List<Post> doInBackground(String... params) {
 		return client.blogPosts(blogname, options);
 	}
 	
+	/**
+	 * De opgehaalde lijst aan post worden in de adapter gezet en vervolgens kan de listview deze adapter gebruiken om
+	 * de opgehaalde posts te weergeven.
+	 */
 	@Override
 	protected void onPostExecute(List<Post> result) {
 		super.onPostExecute(result);

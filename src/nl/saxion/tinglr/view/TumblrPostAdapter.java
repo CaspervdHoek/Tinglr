@@ -26,6 +26,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Adapter klasse voor Tumblrposts
+ *
+ */
 public class TumblrPostAdapter extends ArrayAdapter<Post> {
 	
 	private LayoutInflater inflater;
@@ -45,6 +49,9 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 		client = model.getClient();
 	}
 	
+	/**
+	 * Maakt het volgende item klaar, zodat de gebruiker door zijn posts kan scrollen.
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView == null){
@@ -60,6 +67,9 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 		post = getItem(position);
 		userName.setText(post.getBlogName());
 		
+		/**
+		 * Kijkt van welke soort de post is zodat de juiste text weergeven kan worden.
+		 */
 		if(post instanceof TextPost){
 			tumblrPostText.setText(((TextPost) post).getBody());			
 		} else if (post instanceof PhotoPost){
@@ -68,17 +78,27 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 			tumblrPostText.setText("\"" + ((QuotePost) post).getText() + "\"");
 		}
 		
+		/**
+		 * Kijkt of de post geliked is zodat dit gepasd aangegeven wordt
+		 */
 		if (post.isLiked()){
 			favoriteButton.setImageResource(R.drawable.ic_action_favorited);
 		} else {
 			favoriteButton.setImageResource(R.drawable.ic_action_favorite);
 		}
 		
+		/**
+		 * Haalt de profiel van de postende gebruiker op
+		 */
 		ProfilePhotoTask pft = new ProfilePhotoTask(model, profielfoto);
 		
 		pft.execute(post.getBlogName());
 		
 		profielfoto.setClickable(true);
+		
+		/**
+		 * Zorgt ervoor dat de gebruiker naar de blog van deze blogger kan gaan
+		 */
 		profielfoto.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -87,6 +107,9 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 			}
 		});
 		
+		/**
+		 * Zorgt ervoor dat de gebruiker de post kan favoriten
+		 */
 		favoriteButton.setClickable(true);
 		favoriteButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -98,6 +121,9 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 			}
 		});
 		
+		/**
+		 * Zorgt ervoor dat de gebruiker de post kan rebloggen
+		 */
 		reblogButton.setClickable(true);
 		reblogButton.setOnClickListener(new View.OnClickListener() {
 			

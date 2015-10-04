@@ -5,6 +5,10 @@ import oauth.signpost.commonshttp.CommonsHttpOAuthProvider;
 
 import com.tumblr.jumblr.JumblrClient;
 
+/**
+ * Model klasse die alle belangrijke en globaal beschikbare informatie bijhoud
+ *
+ */
 public class Model {
 	
 	private static final String OAUTH_REQUEST_URL = "http://www.tumblr.com/oauth/request_token";

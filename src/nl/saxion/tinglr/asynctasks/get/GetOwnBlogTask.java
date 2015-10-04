@@ -15,6 +15,10 @@ import com.tumblr.jumblr.types.Post;
 import android.os.AsyncTask;
 import android.widget.ListView;
 
+/**
+ * Task die de blog van de ingelogde gebruiker ophaald
+ *
+ */
 public class GetOwnBlogTask extends AsyncTask<String, Void, List<Post>> {
 
 	private Model model;
@@ -34,11 +38,17 @@ public class GetOwnBlogTask extends AsyncTask<String, Void, List<Post>> {
 	}
 	
 	
+	/**
+	 * Haalt een lijst met posts van de gebruiker zijn eigen blog op.
+	 */
 	@Override
 	protected List<Post> doInBackground(String... params) {
 		return client.blogPosts(client.user().getName(), options);
 	}
 	
+	/**
+	 * Laadt de blog van de gebruiker in de listview
+	 */
 	@Override
 	protected void onPostExecute(List<Post> result) {
 		super.onPostExecute(result);

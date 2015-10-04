@@ -13,6 +13,11 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.ImageView;
 
+/**
+ * Task die ervoor zorgt van een profielfoto aan de hand van een URL wordt geladen in een Bitmap, zodat deze kan worden
+ * weergeven in imageviews binnen de app
+ *
+ */
 public class ProfilePhotoTask extends AsyncTask<String, Void, Bitmap> {
 
 	private JumblrClient client;
@@ -25,6 +30,9 @@ public class ProfilePhotoTask extends AsyncTask<String, Void, Bitmap> {
 		client = model.getClient();
 	}
 	
+	/**
+	 * Haalt eerst de URL van de profielfoto van de meegegeven gebruiker op en maakt hier een Bitmap van.
+	 */
 	@Override
 	protected Bitmap doInBackground(String... params) {
 		String photoUrl = client.blogAvatar(params[0], 128);
@@ -36,16 +44,17 @@ public class ProfilePhotoTask extends AsyncTask<String, Void, Bitmap> {
 			input = new java.net.URL(photoUrl).openStream();
 			myBitmap = BitmapFactory.decodeStream(input);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return myBitmap;
 	}
 
+	/**
+	 * Laadt de Bitmap van de profielfoto in de imageview
+	 */
 	@Override
 	protected void onPostExecute(Bitmap result) {
 		profielfoto.setImageBitmap(result);		

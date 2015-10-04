@@ -14,6 +14,10 @@ import android.view.MenuItem;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+/**
+ * Eerste activity die wordt gestart bij het openen van de app. Zorgt ervoor dat de gebruiker kan inloggen.
+ *
+ */
 public class MainActivity extends Activity {
 
 	private WebView webview;
@@ -30,13 +34,24 @@ public class MainActivity extends Activity {
         
         webview = (WebView) findViewById(R.id.webView1);
         
+        /**
+         * Task die het inlogproces afhandeld
+         */
         AuthorizationTask at = new AuthorizationTask(webview, model);
+        
+        /**
+         * Task die een accesstoken ophaald
+         */
         final AccessTokenTask att = new AccessTokenTask(model, this);
         
         at.execute();
                 
         webview.setWebViewClient(new WebViewClient() {
-        	        	
+        	
+        	/**
+        	 * Als de URL die in de webview geladen wordt begint met "http://www.9gag.com", wordt het inladen onderbroken
+        	 * en wordt uit de URL de oauth verifier gehaald.
+        	 */
         	@Override
         	public boolean shouldOverrideUrlLoading(WebView view, String url) {
         		String verifierToken = null;
@@ -47,6 +62,9 @@ public class MainActivity extends Activity {
         			        			
         			model.setVerifierToken(verifierToken);
         			
+        			/**
+        			 * Hier word de task gestart die een accesstoken gaat ophalen.
+        			 */
         			att.execute(verifierToken);
         			
         			webview.setVisibility(WebView.GONE);
@@ -62,6 +80,9 @@ public class MainActivity extends Activity {
                 
     }
     
+    /**
+     * Met deze methode wordt de DashboardActivity gestart
+     */
     public void startDashboardActivity(){
     	final Intent i = new Intent(this, DashboardActivity.class);
     	startActivity(i);

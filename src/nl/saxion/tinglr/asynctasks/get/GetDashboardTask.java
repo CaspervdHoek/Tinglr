@@ -15,6 +15,10 @@ import com.tumblr.jumblr.types.Post;
 import android.os.AsyncTask;
 import android.widget.ListView;
 
+/**
+ * Haalt de dashboard van de gebruiker op, i.e. de meest recente posts van mensen die hij/zij volgt.
+ *
+ */
 public class GetDashboardTask extends AsyncTask<String, Void, List<Post>>{
 	
 	private Model model;
@@ -33,12 +37,17 @@ public class GetDashboardTask extends AsyncTask<String, Void, List<Post>>{
 		options.put("filter", "text");
 	}
 	
-	
+	/**
+	 * Haalt met behulp van Jumblr een lijst van alle dashboardposts van de gebruiker op.
+	 */
 	@Override
 	protected List<Post> doInBackground(String... params) {
 		return client.userDashboard(options);
 	}
 	
+	/**
+	 * Zet de dashboardposts in de listview
+	 */
 	@Override
 	protected void onPostExecute(List<Post> result) {
 		super.onPostExecute(result);

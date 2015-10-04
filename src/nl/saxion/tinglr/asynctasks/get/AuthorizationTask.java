@@ -16,6 +16,10 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.webkit.WebView;
 
+/**
+ * Task die ervoor zorgt dat de gebruiker een inlogscherm krijgt, waar hij/zij zich bij tumblr kan inloggen.
+ *
+ */
 public class AuthorizationTask extends AsyncTask<String, Void, String> {
 	
 	private Model model;
@@ -31,42 +35,37 @@ public class AuthorizationTask extends AsyncTask<String, Void, String> {
 		consumer = model.getConsumer();
 	}
 
+	/**
+	 * Haalt de URL op van de inlogpagina van Tumblr en geeft deze door aan de onPostExecute
+	 */
 	@Override
 	protected String doInBackground(String... params) {
 		
 		String url = "";
-				
-		// Authenticate via OAuth
-		//JumblrClient client = model.getClient();
+		
 		CommonsHttpOAuthProvider provider = model.getProvider();
 		CommonsHttpOAuthConsumer consumer = model.getConsumer();
-		Log.d("pre try", "casper");
 		try {
-			Log.d("pre retrieve", "casper");
 			url =  provider.retrieveRequestToken(consumer, model.getCallbackURL());
-			Log.d("post retrieve", "casper");
 		} catch (OAuthMessageSignerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OAuthNotAuthorizedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OAuthExpectationFailedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OAuthCommunicationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		Log.d("url", url);
 		return url;
 		
 	}
 	
+	/**
+	 * Laadt de meegekregen URL in de webview
+	 */
 	@Override
 	protected void onPostExecute(String result) {
-		// TODO Auto-generated method stub
 		super.onPostExecute(result);
 		webview.loadUrl(result);
 	}
