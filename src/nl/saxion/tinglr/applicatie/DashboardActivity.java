@@ -8,6 +8,7 @@ import com.tumblr.jumblr.types.User;
 
 import nl.saxion.tinglr.R;
 import nl.saxion.tinglr.asynctasks.get.GetDashboardTask;
+import nl.saxion.tinglr.asynctasks.get.GetFavoritesTask;
 import nl.saxion.tinglr.asynctasks.get.GetOwnBlogTask;
 import nl.saxion.tinglr.asynctasks.get.ProfilePhotoTask;
 import nl.saxion.tinglr.asynctasks.post.PostTextPost;
@@ -83,16 +84,20 @@ public class DashboardActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				GetDashboardTask gdt = new GetDashboardTask(model,
+//				GetDashboardTask gdt = new GetDashboardTask(model,
+//						DashboardActivity.this, listViewTumblrPosts);
+//				gdt.execute();
+				Log.d("Favorite", "Get favorites");
+				GetFavoritesTask gft = new GetFavoritesTask(model,
 						DashboardActivity.this, listViewTumblrPosts);
-				gdt.execute();
+				gft.execute();
 			}
 		});
 
 		textPost.setClickable(true);
 
 		/**
-		 * De onCLick methode voor als een gebruiker een stuk tekst wil posten
+		 * De onClick methode voor als een gebruiker een stuk tekst wil posten
 		 */
 		textPost.setOnClickListener(new View.OnClickListener() {
 

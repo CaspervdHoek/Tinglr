@@ -61,31 +61,11 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 		TextView userName = (TextView) convertView.findViewById(R.id.userName);
 		TextView tumblrPostText = (TextView) convertView.findViewById(R.id.tumblrPostText);
 		ImageView profielfoto = (ImageView) convertView.findViewById(R.id.profielFoto);
-		ImageView favoriteButton = (ImageView) convertView.findViewById(R.id.favoriteButton);
+		final ImageView favoriteButton = (ImageView) convertView.findViewById(R.id.favoriteButton);
 		ImageView reblogButton = (ImageView) convertView.findViewById(R.id.reblogButton);
 		
 		post = getItem(position);
 		userName.setText(post.getBlogName());
-		
-		/**
-		 * Kijkt van welke soort de post is zodat de juiste text weergeven kan worden.
-		 */
-		if(post instanceof TextPost){
-			tumblrPostText.setText(((TextPost) post).getBody());			
-		} else if (post instanceof PhotoPost){
-			tumblrPostText.setText(((PhotoPost) post).getCaption());			
-		} else if (post instanceof QuotePost){
-			tumblrPostText.setText("\"" + ((QuotePost) post).getText() + "\"");
-		}
-		
-		/**
-		 * Kijkt of de post geliked is zodat dit gepasd aangegeven wordt
-		 */
-		if (post.isLiked()){
-			favoriteButton.setImageResource(R.drawable.ic_action_favorited);
-		} else {
-			favoriteButton.setImageResource(R.drawable.ic_action_favorite);
-		}
 		
 		/**
 		 * Haalt de profiel van de postende gebruiker op
@@ -116,6 +96,7 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 			@Override
 			public void onClick(View v) {
 				Log.d("Favorite", "Favorite this post");
+				favoriteButton.setImageResource(R.drawable.ic_action_favorited);
 				LikeTask lt = new LikeTask();
 				lt.execute(post);
 			}
@@ -135,7 +116,29 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 			}
 		});
 		
+		/**
+		 * Kijkt of de post geliked is zodat dit gepasd aangegeven wordt
+		 */
+		if (post.isLiked()){
+			favoriteButton.setImageResource(R.drawable.ic_action_favorited);
+		} else {
+			favoriteButton.setImageResource(R.drawable.ic_action_favorite);
+		}
+		
+		/**
+		 * Kijkt van welke soort de post is zodat de juiste text weergeven kan worden.
+		 */
+		if(post instanceof TextPost){
+			tumblrPostText.setText(((TextPost) post).getBody());			
+		} else if (post instanceof PhotoPost){
+			tumblrPostText.setText(((PhotoPost) post).getCaption());			
+		} else if (post instanceof QuotePost){
+			tumblrPostText.setText("\"" + ((QuotePost) post).getText() + "\"");
+		}
+		
 		return convertView;
 	}
+	
+	
 
 }
