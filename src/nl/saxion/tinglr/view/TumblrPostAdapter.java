@@ -10,7 +10,9 @@ import com.tumblr.jumblr.types.QuotePost;
 import com.tumblr.jumblr.types.TextPost;
 
 import nl.saxion.tinglr.R;
+import nl.saxion.tinglr.applicatie.DashboardActivity;
 import nl.saxion.tinglr.applicatie.TinglrApplication;
+import nl.saxion.tinglr.asynctasks.get.DeletePostTask;
 import nl.saxion.tinglr.asynctasks.get.GetBlogTask;
 import nl.saxion.tinglr.asynctasks.get.LikeTask;
 import nl.saxion.tinglr.asynctasks.get.ProfilePhotoTask;
@@ -38,6 +40,7 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 	private TinglrApplication app;
 	private Post post;
 	private JumblrClient client;
+	private DashboardActivity activity;
 
 	public TumblrPostAdapter(Context context, int resource, List<Post> objects) {
 		super(context, resource, objects);
@@ -47,6 +50,8 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 		app = (TinglrApplication) context.getApplicationContext();
 		model = app.getModel();
 		client = model.getClient();
+		
+		this.activity = (DashboardActivity) context;
 	}
 	
 	/**
@@ -134,8 +139,9 @@ public class TumblrPostAdapter extends ArrayAdapter<Post> {
 				rt.execute(post, client);
 			}
 		});
-		
+				
 		return convertView;
 	}
+	
 
 }

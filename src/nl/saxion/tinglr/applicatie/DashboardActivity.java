@@ -7,6 +7,7 @@ import com.tumblr.jumblr.types.Post;
 import com.tumblr.jumblr.types.User;
 
 import nl.saxion.tinglr.R;
+import nl.saxion.tinglr.asynctasks.get.DeletePostTask;
 import nl.saxion.tinglr.asynctasks.get.GetDashboardTask;
 import nl.saxion.tinglr.asynctasks.get.GetOwnBlogTask;
 import nl.saxion.tinglr.asynctasks.get.ProfilePhotoTask;
@@ -20,6 +21,8 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -213,6 +216,18 @@ public class DashboardActivity extends Activity {
 			public void onClick(View v) {
 				GetOwnBlogTask gobt = new GetOwnBlogTask(model, DashboardActivity.this, listViewTumblrPosts);
 				gobt.execute();
+			}
+		});
+		
+		listViewTumblrPosts.setOnItemLongClickListener(new OnItemLongClickListener() {
+			
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				Log.d("position", position + "");
+				DeletePostTask dpt = new DeletePostTask(model, DashboardActivity.this);
+				dpt.execute(adapter.getItem(position));
+				return false;
 			}
 		});
 
